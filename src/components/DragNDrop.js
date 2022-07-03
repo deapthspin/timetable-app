@@ -2,7 +2,7 @@ import { Button, TextField } from '@mui/material'
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import react, {useEffect, useRef, useState} from 'react'
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
-
+import ColorPicker from 'material-ui-color-picker'
 
 function DragNDrop({data}) {
     let [list, setList] = useState(data)
@@ -12,6 +12,8 @@ function DragNDrop({data}) {
     const [name, setName] = useState('')
     const [value, setValue] = useState(undefined)
     const [updated, setUpdated] = useState(false)
+    const [blockColor, setBlockColor] = useState('#000')
+
     // localStorage.removeItem('data')
     const dragItem = useRef()
     const dragNode = useRef()
@@ -79,16 +81,17 @@ function DragNDrop({data}) {
         setList(list = thing)
         }
         setDragging(false)
+
         dragNode.current.removeEventListener('dragend', handleDragEnd)
         dragItem.current = null
         dragNode.current = null
     }
 
     function addBlock() {
-        if(name && value && name.length <= 100) {
 
+        if(name && value && name.length <= 100) {
             // console.log(list[0].items.push(name))
-        list[1].items.push([`${name}`, `${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? (value.toString().split(' ')[4].split(":")[0] * 1) -12 : value.toString().split(' ')[4].split(":")[0]}:${value.toString().split(' ')[4].split(":")[1]}${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? 'pm' : value.toString().split(' ')[4].split(":")[0] * 1 === 12 ? 'pm' : 'am'}`])
+        list[1].items.push([`${name}`, `${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? (value.toString().split(' ')[4].split(":")[0] * 1) -12 : value.toString().split(' ')[4].split(":")[0]}:${value.toString().split(' ')[4].split(":")[1]}${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? 'pm' : value.toString().split(' ')[4].split(":")[0] * 1 === 12 ? 'pm' : 'am'}`, blockColor])
         console.log(list)
         localStorage.setItem('data', JSON.stringify(list))
         setTimeout(() => {
@@ -138,6 +141,17 @@ function DragNDrop({data}) {
   />
 </LocalizationProvider>
 
+<ColorPicker
+name="color"
+    defaultValue='COLOR'
+    onChange={color => {
+        if(color) {
+            setBlockColor(color)
+        }
+        
+    }}
+/>
+
 <Button onClick={addBlock} variant="contained">add</Button>
 
             </div> : null}
@@ -149,6 +163,7 @@ function DragNDrop({data}) {
                onDragEnter={dragging ? (e) => {handleDragEnter(e, {grpI, itemI})} : null }
                key={`${item}-id:${itemI}`} 
                className={dragging ? getStyles({grpI, itemI}) : "dnd-item"}
+               style={{backgroundColor: item[2]}}
             >
                 
                 
