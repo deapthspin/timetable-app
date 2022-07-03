@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/timetable-app/static/css/main.5e7ec6ce.css",
-    "main.js": "/timetable-app/static/js/main.2b4c8260.js",
+    "main.js": "/timetable-app/static/js/main.ceaa9d73.js",
     "index.html": "/timetable-app/index.html",
     "main.5e7ec6ce.css.map": "/timetable-app/static/css/main.5e7ec6ce.css.map",
-    "main.2b4c8260.js.map": "/timetable-app/static/js/main.2b4c8260.js.map"
+    "main.ceaa9d73.js.map": "/timetable-app/static/js/main.ceaa9d73.js.map"
   },
   "entrypoints": [
     "static/css/main.5e7ec6ce.css",
-    "static/js/main.2b4c8260.js"
+    "static/js/main.ceaa9d73.js"
   ]
 }
