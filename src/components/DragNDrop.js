@@ -140,8 +140,15 @@ function DragNDrop({data}) {
     
   />
 </LocalizationProvider>
-
-<ColorPicker
+ <div className='colors'>
+    <div className='color-pad blue' style={{backgroundColor: 'rgb(77, 160, 255)' }} onClick={() => {
+        setBlockColor('rgb(77, 160, 255)')
+    }}></div>
+    <div className='color-pad white' style={{backgroundColor: 'white'}} onClick={() => {
+        setBlockColor('white')
+    }}></div>
+</div>
+{/* <ColorPicker
 name="color"
     defaultValue='COLOR'
     onChange={color => {
@@ -150,7 +157,7 @@ name="color"
         }
         
     }}
-/>
+/> */}
 
 <Button onClick={addBlock} variant="contained">add</Button>
 

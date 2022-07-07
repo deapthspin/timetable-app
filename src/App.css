@@ -134,5 +134,42 @@ body {
 }
 
 .name-picker {
+
   margin-bottom: 1rem !important;
 }
+
+.colors {
+  display: flex;
+}
+.color-pad {
+
+
+ width: 2.5rem;
+ height: 2.5rem;
+ margin-top: 0.5rem;
+ margin-bottom: 0.5rem;
+ margin-left: 0.5rem;
+ border-radius: 5px;
+
+
+}
+
+.color-pad:hover {
+
+ border: 3px solid rgb(110, 110, 110);
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 5px;
+ 
+ }
+
+ .blue:active {
+  background-color: rgb(54, 113, 180)
+ }
+ .white:active {
+  background-color: rgb(196, 196, 196)
+ }
+
