@@ -3,9 +3,19 @@ import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import react, {useEffect, useRef, useState} from 'react'
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
 import ColorPicker from 'material-ui-color-picker'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import useSound from 'use-sound'
 
 function DragNDrop({data}) {
+    let importRes = import("./gongsfx.mp3");
+    let audio = new Audio(importRes.default)
+
+    
+
+    
+  
     let [list, setList] = useState(data)
+    const [canRender, setCanRender] = useState(true)
     let[listTest, setListTest] = useState()
     const [dragging, setDragging] = useState(false)
     const [currentlyDragging, setCurrentlyDragging] = useState("")
@@ -18,9 +28,9 @@ function DragNDrop({data}) {
     const dragItem = useRef()
     const dragNode = useRef()
 
-    useEffect(() => {
-        localStorage.setItem('data', JSON.stringify(list))
-    }, [list])
+    // useEffect(() => { 
+    //     localStorage.setItem('data', JSON.stringify(list))
+    // }, [list])
    
     const handleDragStart = (e, params) => {
         setUpdated(false)
@@ -53,7 +63,6 @@ function DragNDrop({data}) {
                     
                 }
 
-                console.log(params.grpI)
                     
                
                 
@@ -65,19 +74,16 @@ function DragNDrop({data}) {
 
                 return newList
             })
-            console.log(list)
         setUpdated(true)
 
         }
     }
 
     const handleDragEnd = () => {
-        console.log(dragItem.current.grpI)
         let thing;
         if(dragItem.current.grpI === 0 && updated) {
             thing = JSON.parse(localStorage.getItem('data'))
            thing[0].items.splice(0, 1)
-        console.log('still ',)
         setList(list = thing)
         }
         setDragging(false)
@@ -85,20 +91,90 @@ function DragNDrop({data}) {
         dragNode.current.removeEventListener('dragend', handleDragEnd)
         dragItem.current = null
         dragNode.current = null
+        localStorage.setItem('data', JSON.stringify(list))
+
     }
 
-    function addBlock() {
+    function addBlock() { 
+        if(name  && name.length <= 100) {
+            // console.log(value )
+            const timething = value
+            // && value
+            list[1].items.push([`${name}`, (value ? `${timething.toString().split(' ')[4].split(":")[0] * 1 > 12 ? (timething.toString().split(' ')[4].split(":")[0] * 1) -12 : timething.toString().split(' ')[4].split(":")[0]}:${timething.toString().split(' ')[4].split(":")[1]}${timething.toString().split(' ')[4].split(":")[0] * 1 > 12 ? 'pm' : timething.toString().split(' ')[4].split(":")[0] * 1 === 12 ? 'pm' : 'am'}` : timeConverter(new Date().toTimeString().split(':').slice(0, 2).join(':'))), blockColor, false, false])
 
-        if(name && value && name.length <= 100) {
-            // console.log(list[0].items.push(name))
-        list[1].items.push([`${name}`, `${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? (value.toString().split(' ')[4].split(":")[0] * 1) -12 : value.toString().split(' ')[4].split(":")[0]}:${value.toString().split(' ')[4].split(":")[1]}${value.toString().split(' ')[4].split(":")[0] * 1 > 12 ? 'pm' : value.toString().split(' ')[4].split(":")[0] * 1 === 12 ? 'pm' : 'am'}`, blockColor])
-        console.log(list)
+            localStorage.setItem('data', JSON.stringify(list))
+            setTimeout(() => {
+                setName('')
+            }, 0)
+            console.log('created block')
         localStorage.setItem('data', JSON.stringify(list))
-        setTimeout(() => {
-            setName('')
-        }, 0)
+
         }
-        
+    }
+
+    function timeConverter(time) {
+        const temp = [...time]
+        if(time.split(':')[0] > 12) {
+            
+
+            return (time.split(':')[0] -= 12).toString() + ":" + temp.join('').split(':')[1] + "pm"
+
+            // time.join(':')
+
+        } else {
+            return time + "am"
+        }
+    }
+
+    // setInterval(() => {
+    //     for(let i = 0; i < list.length; i++) {
+    //         list[i].items.map((item) => {
+    //             if(item[4] === true && item[5] === true) {
+    //                 console.log(item[0], item, item[4], item[5], 'iusdgfyustfus')
+    //                 setTimeout(() => {  
+    //                     item[4] = false
+    //                     item[5] = false
+    //                 }, 1)
+                    
+    //             }
+
+    //         })
+    //     }
+    // }, 60000)
+
+    // // let notificationsAvailable = 1
+    // setInterval(() => {
+    //     for(let i = 0; i < list.length; i++) {
+    //         list[i].items.map((item) => {
+    //             // console.log(item)
+    //             const time = item[1]
+    //             const name = item[0]
+    //             const day = list[i].title.split('').slice(0, 3).join('')
+    //             // console.log(item)
+    //             const currentDay = new Date().toDateString().split(' ')[0]
+    //             const currentTime = timeConverter(new Date().toTimeString().split(':').slice(0, 2).join(":"))
+
+    //             // console.log(currentDay, currentTime)
+    //             // console.log(time, name, day)
+
+    //             if(currentDay === day) {
+    //                 item[4] = true
+    //                 if(currentTime === time) {
+    //                     item[5] = true
+    //                 }
+    //             }
+    //         })
+    //     }
+    // }, 60000)
+    
+    function checkCorrect(e, id, grpid) {
+        e.preventDefault()
+        list[grpid].items.splice(id, 1)
+        setCanRender(false)
+
+        setTimeout(() => {
+            setCanRender(true)
+        }, 10)
     }
 
     function onNameChange(e) {
@@ -163,7 +239,7 @@ name="color"
 
             </div> : null}
             <div className='group-title'>{grp.title}</div>
-            {grp.items.map((item, itemI) => item !== "" ? ( 
+            {canRender && grp.items.map((item, itemI) => item !== "" ? ( 
               <div
                draggable 
                onDragStart={(e) => {handleDragStart(e, {grpI, itemI})}} 
@@ -179,6 +255,7 @@ name="color"
                     <h2 className='item-name'>{item[0]}</h2>
                     <br/>
                     <h4 className='item-time'>{item[1]}</h4>
+                    <Button variant='outlined' color='secondary' onClick={(e) => checkCorrect(e, itemI, grpI)}>finish</Button>
                 </div>
               </div>
             ) : ( 
@@ -195,7 +272,9 @@ name="color"
 
           </div>
         ))}
+        <NotificationContainer/>
         </div>
+        
     )
 }
 
