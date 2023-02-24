@@ -189,3 +189,13 @@ body {
   opacity: 0.8;
   margin-bottom: 10px;
 }
+
+
+.pomodoro {
+  background-color: rgb(220, 20, 20);
+  width: fit-content;
+  margin: 0 auto;
+
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+}

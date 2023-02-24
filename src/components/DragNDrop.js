@@ -167,6 +167,8 @@ function DragNDrop({data}) {
     //     }
     // }, 60000)
     
+    
+
     function checkCorrect(e, id, grpid) {
         e.preventDefault()
         list[grpid].items.splice(id, 1)
