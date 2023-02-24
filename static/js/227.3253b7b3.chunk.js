@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktimetable=self.webpackChunktimetable||[]).push([[227],{3227:function(e,a,t){e.exports=t.p+"static/media/gongsfx.d48a1ca8a48af151eaf7.mp3"}}]);
